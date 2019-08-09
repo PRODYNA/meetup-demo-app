@@ -1,0 +1,58 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.prodyna.docker</groupId>
+	<artifactId>tomcat-sample</artifactId>
+	<packaging>war</packaging>
+	<version>1.1.0</version>
+	<name>Tomcat Sample</name>
+
+	<properties>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.resources.plugin.version>3.0.1</maven.resources.plugin.version>
+	</properties>
+
+	<build>
+		<finalName>${project.artifactId}</finalName>
+
+		<!-- Plug-in for replacing variable in the Docker file -->
+		<plugins>
+			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>${maven.resources.plugin.version}</version>
+				<executions>
+					<execution>
+						<id>prepare-dockerfile</id>
+						<phase>validate</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.directory}</outputDirectory>
+							<resources>
+								<resource>
+									<directory>src/main/docker</directory>
+									<filtering>true</filtering>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+	<distributionManagement>
+		<repository>
+			<id>sandbox-releases</id>
+			<url>https://nexus.prodyna.com/nexus/repository/sandbox-mixed/</url>
+		</repository>
+		<snapshotRepository>
+			<id>sandbox-snapshots</id>
+			<url>https://nexus.prodyna.com/nexus/repository/sandbox-mixed/</url>
+		</snapshotRepository>
+	</distributionManagement>
+</project>

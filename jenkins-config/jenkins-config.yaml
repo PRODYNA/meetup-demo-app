@@ -1,0 +1,12 @@
+unclassified:
+  globalLibraries:
+    libraries:
+    - defaultVersion: "master"
+      name: "meetup-jenkins-lib"
+      retriever:
+        modernSCM:
+          scm:
+            git:
+              remote: "git@github.com:PRODYNA/meetup-jenkins-lib.git"
+              traits:
+              - "branchDiscoveryTrait"

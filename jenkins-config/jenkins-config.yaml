@@ -7,6 +7,6 @@ unclassified:
         modernSCM:
           scm:
             git:
-              remote: "git@github.com:PRODYNA/meetup-jenkins-lib.git"
+              remote: "https://github.com/PRODYNA/meetup-jenkins-lib.git"
               traits:
               - "branchDiscoveryTrait"

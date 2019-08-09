@@ -1,5 +1,5 @@
-FROM tomcat:8-jre8-alpine
+FROM openjdk:alpine
 
-EXPOSE 8080/tcp
+COPY @project.artifactId@.jar /app.jar
 
-COPY ${project.artifactId} /usr/local/tomcat/webapps/${project.artifactId}
+ENTRYPOINT ["java","-jar","/app.jar"]

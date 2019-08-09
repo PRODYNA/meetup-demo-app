@@ -8,8 +8,8 @@ buildPipeline {
         new PodTemplates().maven(label, body)
     }
 
-    buildCommand = {
+    buildCommand = { utils ->
         sh "mvn clean package"
-        this.utils.buildImage("${this.env.WORKSPACE}/target", "fassmus/meetup-build-slave:develop")
+        utils.buildImage("${this.env.WORKSPACE}/target", "fassmus/meetup-build-slave:develop")
     }
 }

@@ -10,7 +10,10 @@ buildPipeline {
 
     buildCommand = { utils ->
         sh "mvn clean package"
-        utils.buildImageFromDockerfile("${this.env.WORKSPACE}/target", "fassmus/meetup-demo-app:develop-kaniko")
-        utils.buildImageWithJib("fassmus/meetup-demo-app:develop-jib")
+
+        utils.buildImageFromDockerfile("${this.env.WORKSPACE}/target", "fassmus/meetup-demo-app:${this.env.BRANCH_NAME}-kaniko")
+        utils.buildImageWithJib("fassmus/meetup-demo-app:${this.env.BRANCH_NAME}-jib")
     }
+
+    deployTargets=["develop":["https://github.com/PRODYNA/meetup-demo-environment.git/meetup-demo-app"]]
 }

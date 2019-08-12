@@ -10,6 +10,7 @@ buildPipeline {
 
     buildCommand = { utils ->
         sh "mvn clean package"
-        utils.buildImage("${this.env.WORKSPACE}/target", "fassmus/meetup-build-slave:develop")
+        utils.buildImageFromDockerfile("${this.env.WORKSPACE}/target", "fassmus/meetup-demo-app:develop-kaniko")
+        utils.buildImageWithJib("fassmus/meetup-demo-app:develop-jib")
     }
 }

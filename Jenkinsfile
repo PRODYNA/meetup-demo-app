@@ -9,11 +9,18 @@ buildPipeline {
     }
 
     buildCommand = { utils ->
-        sh "mvn clean package"
+        def branchName = this.env.BRANCH_NAME
 
-        utils.buildImageFromDockerfile("${this.env.WORKSPACE}/target", "fassmus/meetup-demo-app:${this.env.BRANCH_NAME}-kaniko")
-        utils.buildImageWithJib("fassmus/meetup-demo-app:${this.env.BRANCH_NAME}-jib")
+        // Build binary
+        sh "mvn clean package"
+        
+        // Build and push image based on Dockerfile using Kaniko
+        utils.buildImageFromDockerfile("${this.env.WORKSPACE}/target", "fassmus/meetup-demo-app:${branchName}-kaniko")
+
+        // Build same image with Maven and Jib
+        utils.buildImageWithJib("fassmus/meetup-demo-app:${branchName}-jib")
     }
 
+    // Map branch to list of environments to update.
     deployTargets=["develop":["https://github.com/PRODYNA/meetup-demo-environment.git/meetup-demo-app"]]
 }
